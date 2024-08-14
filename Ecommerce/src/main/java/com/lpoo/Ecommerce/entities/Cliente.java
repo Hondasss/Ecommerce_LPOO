@@ -3,12 +3,31 @@ package com.lpoo.Ecommerce.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_client")
 public class Cliente implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private String nome;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+    private Long id;
+	
+	@Column(name = "CPF")
 	private String cpf;
+	@Column(name = "Nome")
+	private String nome;
+	@Column(name = "Email")
 	private String email;
+	@Column(name = "Endereço")
 	private Endereco endereco;
 	
 	public Cliente() {
