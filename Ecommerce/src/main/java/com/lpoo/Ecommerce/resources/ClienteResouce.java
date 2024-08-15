@@ -11,9 +11,9 @@ import com.lpoo.Ecommerce.entities.Endereco;
 @RequestMapping(value = "/clients")
 public class ClienteResouce {
 	
-	@GetMapping
-	public ResponseEntity<Cliente> findAll() {
-		Cliente client = new Cliente("Guilherme", "000222200222", "Paranaguá", new Endereco("log", "32","centro", "Londrina", "estado", "cep"));
-		return ResponseEntity.ok().body(client);
-	}
+	//@GetMapping
+	//public ResponseEntity<Cliente> findAll() {
+		//Cliente client = new Cliente("Guilherme", "000222200222", "Paranaguá", new Endereco("log", "32","centro", "Londrina", "estado", "cep"));
+		//return ResponseEntity.ok().body(client);
+	//}
 }

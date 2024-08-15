@@ -7,9 +7,22 @@ import java.util.Objects;
 
 import com.lpoo.Ecommerce.enums.StatusPedido;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_pedidos")
 public class Pedido implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	private Cliente cliente;
 	private List<ItemPedido> itens = new ArrayList<>();
 	private Double valorTotal;
@@ -18,11 +31,12 @@ public class Pedido implements Serializable{
 	public Pedido() {
 	}
 
-	public Pedido(Cliente cliente, List<ItemPedido> itens, Double valorTotal, StatusPedido status) {
+	public Pedido(Long id, Cliente cliente, List<ItemPedido> itens, Double valorTotal, StatusPedido status) {
 		this.cliente = cliente;
 		this.itens = itens;
 		this.valorTotal = valorTotal;
 		this.status = status;
+		this.id = id;
 	}
 
 	public Cliente getCliente() {
@@ -55,6 +69,14 @@ public class Pedido implements Serializable{
 
 	public void setStatus(StatusPedido status) {
 		this.status = status;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Override
