@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" href="/clientes.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Clientes</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Email</th>
+                    <th>Endereço</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop através dos clientes passados pelo controlador -->
+                <tr th:each="cliente : ${clientes}">
+                    <td th:text="${cliente.nome}"></td>
+                    <td th:text="${cliente.cpf}"></td>
+                    <td th:text="${cliente.email}"></td>
+                    <td th:text="${cliente.endereco != null ? cliente.endereco.logradouro + ', ' + cliente.endereco.numero + ', ' + cliente.endereco.bairro + ', ' + cliente.endereco.cidade + ', ' + cliente.endereco.estado + ' - ' + cliente.endereco.cep : 'Endereço não disponível'}"></td>
+                    <td>
+                        <a th:href="@{/clientes/detalhes/{id}(id=${cliente.id})}" class="view-button">Ver Detalhes</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/clientes/cadastrar" class="add-button">Cadastrar Novo Cliente</a>
+    </div>
+</body>
+</html>

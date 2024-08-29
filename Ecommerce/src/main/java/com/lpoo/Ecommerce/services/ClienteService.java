@@ -12,30 +12,32 @@ import com.lpoo.Ecommerce.repositories.ClienteRepository;
 
 @Service
 public class ClienteService {
-	
-	@Autowired
-	private ClienteRepository repository;
-	
-	public List<Cliente> findAll() {
-		return repository.findAll();
-	}
-	
-	public Cliente findById(Long id) {
-		Optional<Cliente> obj = repository.findById(id);	
-		return obj.get();
-	}
-	
-	public Cliente save(Cliente cliente) {
-		return repository.save(cliente);
-	}
-	
-	public void deleteById(Long id) {
-		repository.deleteById(id);
-	}
-	
-	public void updateEndereco(Long id, Endereco endereco) {
-		Cliente cliente = findById(id);
-		cliente.setEndereco(endereco);
-		repository.save(cliente);
-	}
- }
+    
+    @Autowired
+    private ClienteRepository repository;
+    
+    public List<Cliente> findAll() {
+        return repository.findAll();
+    }
+    
+    public Cliente findById(Long id) {
+        Optional<Cliente> obj = repository.findById(id);  
+        return obj.orElse(null);
+    }
+    
+    public Cliente save(Cliente cliente) {
+        return repository.save(cliente);
+    }
+    
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+    
+    public void updateEndereco(Long id, Endereco endereco) {
+        Cliente cliente = findById(id);
+        if (cliente != null) {
+            cliente.setEndereco(endereco);
+            repository.save(cliente);
+        }
+    }
+}
