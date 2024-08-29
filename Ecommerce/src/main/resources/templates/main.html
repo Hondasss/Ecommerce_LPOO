@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Página Principal</h1>
+        <ul>
+            <!-- Cliente -->
+            <li>
+                <h2>Cliente</h2>
+                <a th:href="@{/cliente/cadastrar}"><button>Cadastrar Cliente</button></a>
+                <a th:href="@{/cliente/listar}"><button>Listar Clientes</button></a>
+            </li>
+            
+            <!-- Produto -->
+            <li>
+                <h2>Produto</h2>
+                <a th:href="@{/produtos/cadastrar}"><button>Cadastrar Produto</button></a>
+                <a th:href="@{/produtos}"><button>Listar Produtos</button></a>
+            </li>
+
+            <!-- Categoria -->
+            <li>
+                <h2>Categoria</h2>
+                <a th:href="@{/categoria/cadastrar}"><button>Cadastrar Categoria</button></a>
+                <a th:href="@{/categoria/listar}"><button>Listar Categorias</button></a>
+            </li>
+
+            <!-- Carrinho -->
+            <li>
+                <h2>Carrinho</h2>
+                <a th:href="@{/carrinho/cadastrar}"><button>Meu carrinho</button></a>
+            </li>
+
+            <!-- Pedido -->
+            <li>
+                <h2>Pedido</h2>
+                <a th:href="@{/pedido/cadastrar}"><button>Meus pedidos</button></a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

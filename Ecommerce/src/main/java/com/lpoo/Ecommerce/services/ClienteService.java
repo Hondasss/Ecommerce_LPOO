@@ -25,7 +25,7 @@ public class ClienteService {
 		return obj.get();
 	}
 	
-	Cliente save(Cliente cliente) {
+	public Cliente save(Cliente cliente) {
 		return repository.save(cliente);
 	}
 	
