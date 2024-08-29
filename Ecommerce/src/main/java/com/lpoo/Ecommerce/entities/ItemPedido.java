@@ -3,10 +3,13 @@ package com.lpoo.Ecommerce.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,11 +17,20 @@ import jakarta.persistence.Table;
 public class ItemPedido implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private Produto produto;
-	private Integer quantidade;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "produto_id")
+	private Produto produto;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name ="pedido_id")
+	private Pedido pedido;
+	
+	private Integer quantidade;
 	
 	public ItemPedido() {
 	}
