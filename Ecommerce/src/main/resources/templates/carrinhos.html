@@ -3,48 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Meu Carrinho</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/carrinho.css}">
 </head>
 <body>
-    <h1>Meu Carrinho</h1>
-    
-    <div th:if="${mensagem}" class="alert alert-success" th:text="${mensagem}"></div>
-    
-    <table th:if="${not #lists.isEmpty(carrinho.itens)}">
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Preço Unitário</th>
-                <th>Subtotal</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="item : ${carrinho.itens}">
-                <td th:text="${item.produto.nome}"></td>
-                <td th:text="${item.quantidade}"></td>
-                <td th:text="${#numbers.formatDecimal(item.produto.preco, 1, 2)}"></td>
-                <td th:text="${#numbers.formatDecimal(item.quantidade * item.produto.preco, 1, 2)}"></td>
-                <td>
-                    <form th:action="@{/carrinho/remover}" method="post">
-                        <input type="hidden" name="itemId" th:value="${item.id}" />
-                        <button type="submit">Remover</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <p th:if="${#lists.isEmpty(carrinho.itens)}">Seu carrinho está vazio.</p>
-    
-    <div th:if="${not #lists.isEmpty(carrinho.itens)}">
-		<p>Total: <span th:text="${#numbers.formatDecimal(total, 1, 2)}"></span></p>
-        <form th:action="@{/carrinho/finalizar}" method="post">
-            <button type="submit">Finalizar Compra</button>
-        </form>
+    <div class="container">
+        <h1>Meu Carrinho</h1>
+        
+        <div th:if="${mensagem}" class="alert alert-success" th:text="${mensagem}"></div>
+        
+        <table th:if="${not #lists.isEmpty(carrinho.itens)}">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Preço Unitário</th>
+                    <th>Subtotal</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${carrinho.itens}">
+                    <td th:text="${item.produto.nome}"></td>
+                    <td th:text="${item.quantidade}"></td>
+                    <td th:text="${#numbers.formatDecimal(item.produto.preco, 1, 2)}"></td>
+                    <td th:text="${#numbers.formatDecimal(item.quantidade * item.produto.preco, 1, 2)}"></td>
+                    <td>
+                        <form th:action="@{/carrinho/remover}" method="post">
+                            <input type="hidden" name="itemId" th:value="${item.id}" />
+                            <button type="submit">Remover</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p th:if="${#lists.isEmpty(carrinho.itens)}">Seu carrinho está vazio.</p>
+        
+        <div th:if="${not #lists.isEmpty(carrinho.itens)}">
+            <p>Total: <span th:text="${#numbers.formatDecimal(total, 1, 2)}"></span></p>
+            <form th:action="@{/carrinho/finalizar}" method="post">
+                <button type="submit">Finalizar Compra</button>
+            </form>
+        </div>
+
+        <a th:href="@{/produtos}">Continuar Comprando</a>
     </div>
-    
-    <a th:href="@{/produtos}">Continuar Comprando</a>
 </body>
 </html>

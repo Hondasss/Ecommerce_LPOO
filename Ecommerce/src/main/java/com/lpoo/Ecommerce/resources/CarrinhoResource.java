@@ -51,13 +51,13 @@ public class CarrinhoResource {
     public String removerDoCarrinho(@RequestParam Long itemId, RedirectAttributes redirectAttributes) {
         carrinhoService.removerItem(itemId);
         redirectAttributes.addFlashAttribute("mensagem", "Item removido do carrinho com sucesso!");
-        return "redirect:/carrinhos";
+        return "redirect:/produtos";
     }
 
     @PostMapping("/finalizar")
     public String finalizarCompra(RedirectAttributes redirectAttributes) {
         carrinhoService.limparCarrinho();
         redirectAttributes.addFlashAttribute("mensagem", "Compra finalizada com sucesso!");
-        return "redirect:/";
+        return "redirect:/produtos";
     }
 }
