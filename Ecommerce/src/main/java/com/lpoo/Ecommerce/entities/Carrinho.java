@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,8 +20,8 @@ public class Carrinho implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(length = 3000)
-	@OneToMany
+	
+	@OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemCarrinho> itens = new ArrayList<>();
 	
 	public Carrinho() {
@@ -43,5 +43,14 @@ public class Carrinho implements Serializable {
 	public List<ItemCarrinho> getItens() {
 		return itens;
 	}
-
+	
+    public void addItem(ItemCarrinho item) {
+        itens.add(item);
+        item.setCarrinho(this);
+    }
+    
+    public void removeItem(ItemCarrinho item) {
+        itens.remove(item);
+        item.setCarrinho(null);
+    }
 }

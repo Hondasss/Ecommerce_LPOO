@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Categoria</title>
+    <link rel="stylesheet" href="/categorias.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastrar Categoria</h1>
+        <form th:action="@{/categorias/salvar}" method="post">
+            <div class="form-group">
+                <label for="nome">Nome da Categoria:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <button type="submit" class="save-button">Salvar</button>
+        </form>
+        <a href="/categorias" class="back-button">Voltar à Lista de Categorias</a>
+		<a href="/main" class="back-button">Voltar ao menu</a>
+    </div>
+</body>
+</html>

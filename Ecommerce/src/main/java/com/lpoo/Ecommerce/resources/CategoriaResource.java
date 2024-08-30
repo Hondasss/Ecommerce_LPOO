@@ -1,33 +1,48 @@
 package com.lpoo.Ecommerce.resources;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lpoo.Ecommerce.entities.Categoria;
 import com.lpoo.Ecommerce.services.CategoriaService;
 
-@RestController
-@RequestMapping(value = "/categorias")
+@Controller
 public class CategoriaResource {
-	
-	@Autowired
-	private CategoriaService service;
-	
-	@GetMapping
-	public ResponseEntity<List<Categoria>> findAll() {
-		List<Categoria> list = service.findAll();
-		return ResponseEntity.ok().body(list);
-	}
-	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Categoria> findById(@PathVariable Long id) {
-		Categoria cliente = service.findById(id);
-		return ResponseEntity.ok().body(cliente);
-		
-	}
+    
+    @Autowired
+    private CategoriaService service;
+    
+    @GetMapping("/categorias")
+    public String listarCategorias(Model model) {
+        List<Categoria> categorias = service.findAll();
+        model.addAttribute("categorias", categorias); // Corrigido para "categorias"
+        return "categoria";
+    }
+    
+    @GetMapping("/categorias/cadastrar")
+    public String mostrarFormularioCadastro(Model model) {
+        model.addAttribute("categoria", new Categoria());
+        return "cadastraCategoria";
+    }
+
+    @PostMapping("/categorias/salvar")
+    public String salvarCategoria(@ModelAttribute Categoria categoria, Model model) {
+        service.save(categoria);
+        return "redirect:/categorias"; 
+    }
+
+    @PostMapping("/categorias/deletar")
+    public String deletarCategoria(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+        service.deleteById(id);
+        redirectAttributes.addFlashAttribute("mensagem", "Categoria deletada com sucesso!");
+        return "redirect:/categorias";
+    }
 }

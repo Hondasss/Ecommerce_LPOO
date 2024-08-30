@@ -10,11 +10,16 @@ import com.lpoo.Ecommerce.entities.Cliente;
 import com.lpoo.Ecommerce.entities.Endereco;
 import com.lpoo.Ecommerce.repositories.ClienteRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ClienteService {
     
     @Autowired
     private ClienteRepository repository;
+
+    @Autowired
+    private EnderecoService enderecoService;
     
     public List<Cliente> findAll() {
         return repository.findAll();
@@ -25,7 +30,12 @@ public class ClienteService {
         return obj.orElse(null);
     }
     
+    @Transactional
     public Cliente save(Cliente cliente) {
+        if (cliente.getEndereco() != null) {
+            Endereco savedEndereco = enderecoService.save(cliente.getEndereco());
+            cliente.setEndereco(savedEndereco);
+        }
         return repository.save(cliente);
     }
     

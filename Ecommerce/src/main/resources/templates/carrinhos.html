@@ -1,45 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho</title>
-    <link rel="stylesheet" href="/carrinho.css">
+    <title>Meu Carrinho</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div class="container">
-        <h1>Seu Carrinho</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome do Produto</th>
-                    <th>Quantidade</th>
-                    <th>Preço Unitário</th>
-                    <th>Preço Total</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Loop através dos itens do carrinho -->
-                <tr th:each="item : ${itensCarrinho}">
-                    <td th:text="${item.produto.nome}"></td>
-                    <td th:text="${item.quantidade}"></td>
-                    <td th:text="${item.produto.preco}"></td>
-                    <td th:text="${#numbers.formatDecimal(item.produto.preco * item.quantidade, 2)}"></td>
-                    <!-- Formulário para remover item -->
-                    <td>
-                        <form th:action="@{/carrinho/remover}" method="post">
-                            <input type="hidden" th:name="itemId" th:value="${item.id}" />
-                            <button type="submit" class="remove-button">Remover</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <!-- Botão para finalizar compra -->
+    <h1>Meu Carrinho</h1>
+    
+    <div th:if="${mensagem}" class="alert alert-success" th:text="${mensagem}"></div>
+    
+    <table th:if="${not #lists.isEmpty(carrinho.itens)}">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Subtotal</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${carrinho.itens}">
+                <td th:text="${item.produto.nome}"></td>
+                <td th:text="${item.quantidade}"></td>
+                <td th:text="${#numbers.formatDecimal(item.produto.preco, 1, 2)}"></td>
+                <td th:text="${#numbers.formatDecimal(item.quantidade * item.produto.preco, 1, 2)}"></td>
+                <td>
+                    <form th:action="@{/carrinho/remover}" method="post">
+                        <input type="hidden" name="itemId" th:value="${item.id}" />
+                        <button type="submit">Remover</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p th:if="${#lists.isEmpty(carrinho.itens)}">Seu carrinho está vazio.</p>
+    
+    <div th:if="${not #lists.isEmpty(carrinho.itens)}">
+		<p>Total: <span th:text="${#numbers.formatDecimal(total, 1, 2)}"></span></p>
         <form th:action="@{/carrinho/finalizar}" method="post">
-            <button type="submit" class="finalize-button">Finalizar Compra</button>
+            <button type="submit">Finalizar Compra</button>
         </form>
     </div>
+    
+    <a th:href="@{/produtos}">Continuar Comprando</a>
 </body>
 </html>

@@ -21,7 +21,6 @@ public class Cliente implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
     private Long id;
 	
 	@Column(name = "CPF")
@@ -32,7 +31,7 @@ public class Cliente implements Serializable {
 	private String email;
 	
 	@OneToOne(cascade = CascadeType.ALL)	
-	@JoinColumn(name = "endereco_id")
+	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
 	
 	public Cliente() {

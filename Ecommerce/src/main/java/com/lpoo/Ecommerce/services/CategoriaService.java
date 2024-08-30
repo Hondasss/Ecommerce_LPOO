@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpoo.Ecommerce.entities.Categoria;
+import com.lpoo.Ecommerce.entities.Produto;
 import com.lpoo.Ecommerce.repositories.CategoriaRepository;
 
 @Service
@@ -23,4 +24,13 @@ public class CategoriaService {
 		Optional<Categoria> obj = repository.findById(id);	
 		return obj.get();
 	}
+	
+	public void deleteById(Long id) {
+		repository.deleteById(id);
+	}
+	
+	public Categoria save(Categoria categoria) {
+		return repository.save(categoria);
+	}
+
  }

@@ -16,7 +16,7 @@
                     <th>CPF</th>
                     <th>Email</th>
                     <th>Endereço</th>
-                    <th>Ação</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +27,11 @@
                     <td th:text="${cliente.email}"></td>
                     <td th:text="${cliente.endereco != null ? cliente.endereco.logradouro + ', ' + cliente.endereco.numero + ', ' + cliente.endereco.bairro + ', ' + cliente.endereco.cidade + ', ' + cliente.endereco.estado + ' - ' + cliente.endereco.cep : 'Endereço não disponível'}"></td>
                     <td>
-                        <a th:href="@{/clientes/detalhes/{id}(id=${cliente.id})}" class="view-button">Ver Detalhes</a>
+                        <!-- Formulário para deletar cliente -->
+                        <form th:action="@{/clientes/deletar}" method="post" style="display:inline;">
+                            <input type="hidden" name="id" th:value="${cliente.id}"/>
+                            <button type="submit" class="delete-button">Deletar</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>

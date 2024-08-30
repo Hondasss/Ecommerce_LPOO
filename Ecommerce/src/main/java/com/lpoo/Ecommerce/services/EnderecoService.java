@@ -9,26 +9,27 @@ import org.springframework.stereotype.Service;
 import com.lpoo.Ecommerce.entities.Endereco;
 import com.lpoo.Ecommerce.repositories.EnderecoRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class EnderecoService {
     
     @Autowired
-    private EnderecoRepository enderecoRepository;
+    private EnderecoRepository repository;
+    
+    public Endereco save(Endereco endereco) {
+        return repository.save(endereco);        
+    }
     
     public List<Endereco> findAll() {
-        return enderecoRepository.findAll();
+        return repository.findAll();
     }
     
     public Endereco findById(Long id) {
-        Optional<Endereco> obj = enderecoRepository.findById(id);
-        return obj.orElse(null);
-    }
-    
-    public Endereco save(Endereco endereco) {
-        return enderecoRepository.save(endereco);
+        return repository.findById(id).orElse(null);
     }
     
     public void deleteById(Long id) {
-        enderecoRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

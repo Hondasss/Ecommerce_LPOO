@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Categorias</title>
+    <link rel="stylesheet" href="/categorias.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Categorias</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Ação</th> <!-- Coluna para ações -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop através das categorias passadas pelo controlador -->
+                <tr th:each="categoria : ${categorias}">
+                    <td th:text="${categoria.id}"></td>
+                    <td th:text="${categoria.nome}"></td>
+                    <td>
+						<form th:action="@{/categorias/deletar}" method="post">
+						    <input type="hidden" th:name="id" th:value="${categoria.id}" />
+						    <button type="submit">Deletar</button>
+						</form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/categorias/cadastrar" class="add-button">Cadastrar Nova Categoria</a>
+    </div>
+</body>
+</html>

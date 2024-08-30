@@ -30,7 +30,7 @@ public class ProdutoService {
 		repository.deleteById(id);
 	}
 	
-	Produto save(Produto produto) {
+	public Produto save(Produto produto) {
 		return repository.save(produto);
 	}
 
