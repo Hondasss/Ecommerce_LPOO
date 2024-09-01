@@ -19,10 +19,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_pedidos")
-public class Pedido implements Serializable{
+public class Pedido implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+																				
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -33,16 +33,16 @@ public class Pedido implements Serializable{
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
-	private Double valorTotal;
+	
+	private double valorTotal;
+	
 	private StatusPedido status;
 	
 	public Pedido() {
 	}
 
-	public Pedido(Long id, Cliente cliente, List<ItemPedido> itens, Double valorTotal, StatusPedido status) {
+	public Pedido(Long id, Cliente cliente, StatusPedido status) {
 		this.cliente = cliente;
-		this.itens = itens;
-		this.valorTotal = valorTotal;
 		this.status = status;
 		this.id = id;
 	}
@@ -58,17 +58,14 @@ public class Pedido implements Serializable{
 	public List<ItemPedido> getItens() {
 		return itens;
 	}
+	
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
+    }
 
-	public void setItens(List<ItemPedido> itens) {
-		this.itens = itens;
-	}
-
+	// Método para calcular o valor total do pedido
 	public Double getValorTotal() {
-		return valorTotal;
-	}
-
-	public void setValorTotal(Double valorTotal) {
-		this.valorTotal = valorTotal;
+		return itens.stream().mapToDouble(item -> item.getProduto().getPreco() * item.getQuantidade()).sum();
 	}
 
 	public StatusPedido getStatus() {
@@ -77,6 +74,10 @@ public class Pedido implements Serializable{
 
 	public void setStatus(StatusPedido status) {
 		this.status = status;
+	}
+
+	public void setValorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	public Long getId() {
@@ -89,19 +90,24 @@ public class Pedido implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cliente, itens);
+		return Objects.hash(id);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass())
 			return false;
 		Pedido other = (Pedido) obj;
-		return Objects.equals(cliente, other.cliente) && Objects.equals(itens, other.itens);
+		return Objects.equals(id, other.id);
 	}
 	
+	// Método para adicionar um item ao pedido
+	public void addItem(ItemPedido item) {
+		itens.add(item);
+		item.setPedido(this);
+	}
+
+
 }

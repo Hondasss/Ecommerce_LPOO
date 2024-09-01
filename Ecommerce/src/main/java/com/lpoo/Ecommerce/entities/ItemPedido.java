@@ -22,12 +22,12 @@ public class ItemPedido implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "produto_id")
 	private Produto produto;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name ="pedido_id")
+	@ManyToOne
+	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
 	
 	private Integer quantidade;
@@ -35,8 +35,9 @@ public class ItemPedido implements Serializable {
 	public ItemPedido() {
 	}
 
-	public ItemPedido(Long id, Produto produto, Integer quantidade) {
+	public ItemPedido(Long id, Produto produto, Pedido pedido, Integer quantidade) {
 		this.produto = produto;
+		this.pedido = pedido;
 		this.quantidade = quantidade;
 		this.id = id;
 	}
@@ -65,6 +66,14 @@ public class ItemPedido implements Serializable {
 		this.id = id;
 	}
 
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -74,14 +83,9 @@ public class ItemPedido implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass())
 			return false;
 		ItemPedido other = (ItemPedido) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
 }

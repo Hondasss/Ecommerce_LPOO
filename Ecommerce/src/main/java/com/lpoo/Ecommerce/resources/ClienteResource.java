@@ -29,7 +29,7 @@ public class ClienteResource {
     public String listarClientes(Model model) {
         List<Cliente> clientes = clienteService.findAll();
         model.addAttribute("clientes", clientes);
-        return "clientes";	
+        return "clientes";		
     }
 
     @GetMapping("/clientes/cadastrar")

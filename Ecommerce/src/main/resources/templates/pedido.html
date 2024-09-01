@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Pedidos</title>
+</head>
+<body>
+    <h1>Lista de Pedidos</h1>
+    
+    <table th:if="${!pedidos.empty}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Valor Total</th>
+                <th>Status</th>
+                <th>Detalhes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pedido : ${pedidos}">
+                <td th:text="${pedido.id}"></td>
+                <td th:text="${pedido.cliente.nome}"></td>
+                <td th:text="${#numbers.formatDecimal(pedido.valorTotal, 1, 2)}"></td>
+                <td th:text="${pedido.status}"></td>
+                <td><a th:href="@{/pedido/{id}(id=${pedido.id})}">Ver Detalhes</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p th:if="${pedidos.empty}">Nenhum pedido encontrado.</p>
+    
+    <a href="/main" class="btn btn-primary">Voltar ao menu</a>
+</body>
+</html>

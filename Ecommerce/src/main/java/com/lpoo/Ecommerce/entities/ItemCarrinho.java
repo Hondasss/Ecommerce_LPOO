@@ -24,11 +24,11 @@ public class ItemCarrinho implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "produto_id")
+    @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "carrinho_id")
+    @JoinColumn(name = "carrinho_id", nullable = false)
     private Carrinho carrinho;
 
     @Column(nullable = false)
@@ -85,9 +85,7 @@ public class ItemCarrinho implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
+        if (obj == null || getClass() != obj.getClass())
             return false;
         ItemCarrinho other = (ItemCarrinho) obj;
         return Objects.equals(id, other.id);
